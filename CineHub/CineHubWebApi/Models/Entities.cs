@@ -21,6 +21,8 @@ namespace CineHubWebApi.Models
 
         public decimal Rating { get; set; }
 
+        public virtual ICollection<Session> Sessions { get; set; }
+
     }
 
     public class Session
@@ -34,6 +36,12 @@ namespace CineHubWebApi.Models
         public DateTime Time { get; set; }
 
         public Decimal Price { get; set; }
+
+        public virtual Movie Movie { get; set; }
+
+        public virtual Screen Screen { get; set; }
+
+        public virtual ICollection<Booking> Bookings { get; set; }
     }
 
     public class Cinema
@@ -42,9 +50,15 @@ namespace CineHubWebApi.Models
 
         public string Name { get; set; }
 
-        public string Address { get; set; }
+        public string StreetAddress { get; set; }
 
-        public string PhoneNumber { get; set; }
+        public string Suburb { get; set; }
+
+        public string State { get; set; }
+
+        public string PostCode { get; set; }
+
+        public virtual ICollection<Screen> Screens { get; set; }
     }
 
     public class Screen
@@ -54,6 +68,12 @@ namespace CineHubWebApi.Models
         public string Name { get; set; }
 
         public int CinemaId { get; set; }
+
+        public virtual Cinema Cinema { get; set; }
+
+        public virtual ICollection<Session> Sessions { get; set; }
+
+        public virtual ICollection<Seat> Seats { get; set; }
     }
 
     public class Customer
@@ -63,6 +83,8 @@ namespace CineHubWebApi.Models
         public string Name { get; set; }
 
         public string PhoneNumber { get; set; }
+
+        public virtual ICollection<Booking> Bookings { get; set; }
     }
 
     public class Booking
@@ -74,8 +96,12 @@ namespace CineHubWebApi.Models
         public int CustomerId { get; set; }
 
         public int SessionId { get; set; }
-        
-        public List<int> SeatId { get; set; }
+
+        public virtual Customer Customer { get; set; }
+
+        public virtual Session Session { get; set; }
+
+        public virtual ICollection<SeatReservation> SeatReservations { get; set; }
     }
 
     public class Seat
@@ -88,7 +114,23 @@ namespace CineHubWebApi.Models
         public int Number { get; set; }
 
         public int ScreenId { get; set; }
+
+        public virtual Screen Screen { get; set; }
+
+        public virtual ICollection<SeatReservation> SeatReservations { get; set; }
+        
     }
 
+    public class SeatReservation
+    {
+        public int Id { get; set; }
 
+        public int SeatId { get; set; }
+
+        public int BookingId { get; set; }
+
+        public virtual Seat Seat { get; set; }
+
+        public virtual Booking Booking { get; set; }
+    }
 }
